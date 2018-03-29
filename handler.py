@@ -15,3 +15,11 @@ def ec2start(event, context):
     return {
         "message": "Success"
     }
+
+def setasginstancesize(event, context):
+
+    print("Receive event: {}".format(event))
+    asgops.update_autoscalinggroup(event)
+    return {
+        "message": "Success"
+    }

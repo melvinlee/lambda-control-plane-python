@@ -1,6 +1,6 @@
 # AWS-Py-Control-Plane
 
-FaaS control plane to start/stop EC2
+FaaS control plane to start/stop EC2 and set autoscaling instance size. See `serverless.yml` example how to hook up event trigger for each function.
 
 ## Setup
 
