@@ -1,12 +1,8 @@
 service: ec2-controlplane-lambda
-
-plugins:
-  - serverless-pseudo-parameters
   
 provider:
   name: aws
   runtime: python3.6
-
   stage: ${opt:stage, 'dev'}  
   region: ap-southeast-1
   
@@ -15,7 +11,8 @@ provider:
         Action:
           - ec2:Stop*
           - ec2:Start*
-        Resource: "arn:aws:ec2:#{AWS::Region}:#{AWS::AccountId}:instance/*"
+        Resource: 
+          - "Fn::Join": ["" , ["arn:aws:ec2:" , {"Ref": "AWS::Region"}, ":", {"Ref": "AWS::AccountId"}, ":instance/*"]]
       - Effect: Allow
         Action:
           - ec2:Describe*
@@ -23,7 +20,8 @@ provider:
       - Effect: Allow
         Action: 
           - autoscaling:UpdateAutoScalingGroup
-        Resource: "arn:aws:autoscaling:#{AWS::Region}:#{AWS::AccountId}:autoScalingGroup:*:autoScalingGroupName/*"
+        Resource:
+          - "Fn::Join": ["" , ["arn:aws:autoscaling:" , {"Ref": "AWS::Region"}, ":", {"Ref": "AWS::AccountId"}, ":autoScalingGroup:*:autoScalingGroupName/*"]]
 
 functions:
   ec2start:
